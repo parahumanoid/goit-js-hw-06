@@ -13,26 +13,30 @@ class User {
     this.email = newEmail;
   }
 }
-//--------------------------
 class Admin extends User {
   static role = {
     BASIC: "basic",
     SUPERUSER: "superuser",
   };
-  static blacklistedEmails = [];
-  static blacklist(email){
-    if(!(Admin.blacklisedEmails.contains(email)))
-       Admin.blacklistedEmails.push(email);
-  }
-  static isBlacklisted(email){
-    return Admin.blacklistedEmails.contains(email);
-  }
+
+  blacklistedEmails = [];
+
   constructor(params) {
     super(params.email);
     this.access = params.access;
   }
+
+  blacklist(email) {
+    if (this.blacklistedEmails.includes(email)===false) {
+      this.blacklistedEmails.push(email);
+    }
+  }
+
+  isBlacklisted(email) {
+    return this.blacklistedEmails.includes(email);
+  }
 }
-//-------------------------
+
 const mango = new Admin({
   email: "mango@mail.com",
   access: Admin.role.SUPERUSER,
